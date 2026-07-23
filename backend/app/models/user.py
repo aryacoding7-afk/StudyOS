@@ -1,9 +1,11 @@
+from typing import TYPE_CHECKING
 from sqlalchemy import String
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.db.base import Base
 from app.db.mixins import TimestampMixin
-
+if TYPE_CHECKING:
+    from app.models.note import Note
 
 class User(TimestampMixin, Base):
     __tablename__ = "users"
@@ -23,4 +25,11 @@ class User(TimestampMixin, Base):
     hashed_password: Mapped[str] = mapped_column(
         String(255),
         nullable=False,
+
+    
+    )
+
+    notes: Mapped[list["Note"]] = relationship(
+        back_populates="owner",
+        cascade="all, delete-orphan",
     )
