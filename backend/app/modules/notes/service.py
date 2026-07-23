@@ -1,7 +1,8 @@
+from sqlalchemy.orm import Session
+
 from app.models.user import User
 from app.modules.notes.repository import NotesRepository
 from app.modules.notes.schemas import NoteCreate
-from sqlalchemy.orm import Session
 
 
 class NotesService:
@@ -18,3 +19,9 @@ class NotesService:
             content=note.content,
             owner=current_user,
         )
+
+    def get_notes(
+        self,
+        current_user: User,
+    ):
+        return self.repository.get_notes(current_user)

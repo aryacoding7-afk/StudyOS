@@ -25,3 +25,13 @@ def create_note(
 ):
     service = NotesService(db)
     return service.create_note(note, current_user)
+@router.get(
+    "",
+    response_model=list[NoteResponse],
+)
+def get_notes(
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    service = NotesService(db)
+    return service.get_notes(current_user)

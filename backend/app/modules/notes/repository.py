@@ -25,3 +25,14 @@ class NotesRepository:
         self.db.refresh(note)
 
         return note
+
+    def get_notes(
+        self,
+        owner: User,
+    ) -> list[Note]:
+        return (
+            self.db.query(Note)
+            .filter(Note.owner_id == owner.id)
+            .order_by(Note.created_at.desc())
+            .all()
+        )
