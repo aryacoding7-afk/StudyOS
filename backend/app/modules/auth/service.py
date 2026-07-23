@@ -5,6 +5,10 @@ from app.modules.auth.repository import AuthRepository
 from app.modules.auth.schemas import UserCreate
 from app.modules.auth.security import hash_password
 
+from app.modules.auth.jwt import create_access_token
+from app.modules.auth.security import verify_password
+from app.modules.auth.schemas import LoginRequest
+
 
 class AuthService:
     def __init__(self, db: Session):
@@ -34,3 +38,29 @@ class AuthService:
             email=user.email,
             hashed_password=hashed_password,
         )
+    def login_user(self, user: LoginRequest):
+        db_user = self.repository.get_by_email(user.email)
+
+        if db_user is None:
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail="Invalid email or password",
+            )
+
+        if not verify_password(user.password, db_user.hashed_password):
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail="Invalid email or password",
+            )
+
+        token = create_access_token(
+            {
+                "sub": str(db_user.id),
+            }
+        )
+
+        return {
+            "access_token": token,
+            "token_type": "bearer",
+        }
+    
