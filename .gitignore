@@ -1,0 +1,20 @@
+# Uploaded files
+backend/uploads/
+
+# Python virtual environment
+backend/.venv/
+.venv/
+
+# Python cache
+__pycache__/
+*.py[cod]
+
+# Environment variables
+.env
+backend/.env
+
+# IDE
+.vscode/
+
+# macOS
+.DS_Store

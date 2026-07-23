@@ -6,6 +6,7 @@ from app.db.base import Base
 from app.db.mixins import TimestampMixin
 if TYPE_CHECKING:
     from app.models.note import Note
+    from app.models.file import File
 
 class User(TimestampMixin, Base):
     __tablename__ = "users"
@@ -30,6 +31,11 @@ class User(TimestampMixin, Base):
     )
 
     notes: Mapped[list["Note"]] = relationship(
+        back_populates="owner",
+        cascade="all, delete-orphan",
+    )
+
+    files: Mapped[list["File"]] = relationship(
         back_populates="owner",
         cascade="all, delete-orphan",
     )
