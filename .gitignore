@@ -1,20 +1,50 @@
-# Uploaded files
-backend/uploads/
-
-# Python virtual environment
-backend/.venv/
-.venv/
-
-# Python cache
+# ==========================
+# Python
+# ==========================
 __pycache__/
 *.py[cod]
+*.pyo
+*.pyd
 
-# Environment variables
+# ==========================
+# Virtual Environments
+# ==========================
+.venv/
+venv/
+backend/.venv/
+
+# ==========================
+# Environment Variables
+# ==========================
 .env
 backend/.env
 
-# IDE
+# ==========================
+# VS Code
+# ==========================
 .vscode/
 
+# ==========================
+# Uploaded Files
+# ==========================
+backend/uploads/
+
+# ==========================
+# Python Test Cache
+# ==========================
+.pytest_cache/
+
+# ==========================
+# MyPy
+# ==========================
+.mypy_cache/
+
+# ==========================
+# Ruff
+# ==========================
+.ruff_cache/
+
+# ==========================
 # macOS
+# ==========================
 .DS_Store
