@@ -36,3 +36,38 @@ class NotesRepository:
             .order_by(Note.created_at.desc())
             .all()
         )
+
+    def get_note(
+        self,
+        note_id: str,
+        owner: User,
+    ) -> Note | None:
+        return (
+            self.db.query(Note)
+            .filter(
+                Note.id == note_id,
+                Note.owner_id == owner.id,
+            )
+            .first()
+        )
+
+    def update_note(
+        self,
+        note: Note,
+        title: str,
+        content: str,
+    ) -> Note:
+        note.title = title
+        note.content = content
+
+        self.db.commit()
+        self.db.refresh(note)
+
+        return note
+
+    def delete_note(
+        self,
+        note: Note,
+    ):
+        self.db.delete(note)
+        self.db.commit()
