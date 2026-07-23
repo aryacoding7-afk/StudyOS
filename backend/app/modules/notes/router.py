@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, Response, status
 from sqlalchemy.orm import Session
 
 from app.db.session import get_db
@@ -70,3 +70,21 @@ def update_note(
         note,
         current_user,
     )
+
+@router.delete(
+    "/{note_id}",
+    status_code=status.HTTP_204_NO_CONTENT,
+)
+def delete_note(
+    note_id: str,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    service = NotesService(db)
+
+    service.delete_note(
+        note_id,
+        current_user,
+    )
+
+    return Response(status_code=status.HTTP_204_NO_CONTENT)

@@ -67,3 +67,21 @@ class NotesService:
             title=note_data.title,
             content=note_data.content,
         )
+
+    def delete_note(
+        self,
+        note_id: str,
+        current_user: User,
+    ):
+        note = self.repository.get_note(
+            note_id,
+            current_user,
+        )
+
+        if note is None:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail="Note not found",
+            )
+
+        self.repository.delete_note(note)
