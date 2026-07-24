@@ -7,6 +7,7 @@ class Settings(BaseSettings):
     # ======================================================
 
     DATABASE_URL: str
+    TEST_DATABASE_URL: str
     REDIS_URL: str
 
     # ======================================================
@@ -32,8 +33,6 @@ class Settings(BaseSettings):
     TEMPERATURE: float = 0.2
 
     MAX_OUTPUT_TOKENS: int = 2048
-
-    # ======================================================
 
     model_config = SettingsConfigDict(
         env_file=".env",

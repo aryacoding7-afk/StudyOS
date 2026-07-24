@@ -7,7 +7,10 @@ from app.modules.auth.dependencies import get_current_user
 from app.modules.files.schemas import FileUploadResponse
 from app.modules.files.service import FilesService
 
-router = APIRouter(prefix="/files", tags=["Files"])
+router = APIRouter(
+    prefix="/files",
+    tags=["Files"],
+)
 
 
 @router.post(

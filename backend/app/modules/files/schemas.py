@@ -1,9 +1,11 @@
 from uuid import UUID
-from pydantic import BaseModel, ConfigDict
 
-class FileResponse(BaseModel):
-    model_config = ConfigDict(from_attributes=True)
+from pydantic import BaseModel
 
-    id: UUID
+
+class FileUploadResponse(BaseModel):
+    file_id: UUID
+    document_id: UUID
     filename: str
     filepath: str
+    page_count: int
