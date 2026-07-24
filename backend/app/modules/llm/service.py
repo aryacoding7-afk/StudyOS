@@ -9,7 +9,7 @@ from app.modules.llm.schemas import (
     LLMRequest,
     LLMResponse,
 )
-from app.utils.gemini import client
+from app.utils.gemini import get_gemini_client
 
 logger = logging.getLogger(__name__)
 
@@ -35,6 +35,9 @@ class LLMService:
                 "Generating AI response using Gemini model '%s'",
                 settings.LLM_MODEL,
             )
+
+            # Lazily initialize the Gemini client
+            client = get_gemini_client()
 
             response = client.models.generate_content(
                 model=settings.LLM_MODEL,

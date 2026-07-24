@@ -1,13 +1,27 @@
+from functools import lru_cache
+
 from sentence_transformers import SentenceTransformer
 
-# Load once when the application starts
-model = SentenceTransformer("BAAI/bge-small-en-v1.5")
+from app.core.config import settings
+
+
+@lru_cache
+def get_embedding_model() -> SentenceTransformer:
+    """
+    Lazily load and cache the embedding model.
+
+    The model is loaded only on the first request and reused
+    for the lifetime of the application.
+    """
+    return SentenceTransformer(settings.EMBEDDING_MODEL)
 
 
 def generate_embedding(text: str) -> list[float]:
     """
-    Generate a 384-dimensional embedding for the given text.
+    Generate a normalized embedding for the given text.
     """
+    model = get_embedding_model()
+
     embedding = model.encode(
         text,
         normalize_embeddings=True,

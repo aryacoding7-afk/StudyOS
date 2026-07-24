@@ -1,7 +1,7 @@
 from google import genai
 
 from app.core.config import settings
-from app.utils.gemini import client
+from app.utils.gemini import get_gemini_client
 
 
 def validate_model() -> None:
@@ -11,6 +11,8 @@ def validate_model() -> None:
     """
 
     configured = f"models/{settings.LLM_MODEL}"
+
+    client = get_gemini_client()
 
     available = {
         model.name
