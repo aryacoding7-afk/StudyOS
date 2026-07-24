@@ -1,9 +1,10 @@
 import logging
+import os
 
-from app.core.exception_handlers import register_exception_handlers
 from fastapi import FastAPI
 from sqlalchemy import text
 
+from app.core.exception_handlers import register_exception_handlers
 from app.core.logging import setup_logging
 
 # Configure logging FIRST
@@ -16,8 +17,9 @@ from app.api.router import api_router
 from app.db.session import engine
 from app.utils.model_validator import validate_model
 
-
-validate_model()
+# Skip Gemini model validation during automated tests/CI
+if os.getenv("SKIP_MODEL_VALIDATION") != "true":
+    validate_model()
 
 app = FastAPI(
     title="StudyOS API",
